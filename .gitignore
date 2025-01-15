@@ -1,2 +1,3 @@
 .vscode
+node_modules/
 # i meant to do not turn env file

@@ -5,7 +5,7 @@ const app = express();
 
 app.use(helmet());
 app.use(cors({
-	// instead of setting backend url we just working now with every dns
+	// instead of setting backend url we just working now with every dns 
 	origin : '*',
 	credentials : true
 }));
