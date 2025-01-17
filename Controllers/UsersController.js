@@ -6,19 +6,19 @@ const Signup = async (req, res) => {
 		firstname, lastname, email, password, tel, country
 	} = req.body;
 	try {
-		if (!firstname || !lastname || !email || !password || !tel || !country)
-			return res.json({ msg: "incomplete data" }).status(500);
-		const query = new User({
-			firstname,
-			lastname,
-			email,
-			password,
-			tel,
-			country
-		})
-		await query.save();
-		return res.json({ msg: "Created Successfully !" });
-
+		if (firstname && lastname && email && password && tel && country) {
+			const query = new User({
+				firstname,
+				lastname,
+				email,
+				password,
+				tel,
+				country
+			})
+			await query.save();
+			return res.json({ msg: "Created Successfully !" });
+		}
+		return res.json({ msg: "incomplete data" }).status(500);
 	}
 	catch (err) {
 		console.log(err);

@@ -28,6 +28,7 @@ const UserSchema = new mongoose.Schema({
 		trim: true,
 		lowercase: true,
 		index: true,
+		index: true,
 		immutable: true, // cant change it
 		validate: {
 			validator: (val) => {
@@ -41,7 +42,7 @@ const UserSchema = new mongoose.Schema({
 		required: true,
 		validate: {
 			validator: (val) => {
-				return /^\S[a-zA-Zrachid!@#$%^&*0-9]{8,}$/.test(val);
+				return /^[a-zA-Zrachid !@#$%^&*0-9]{8,}$/.test(val);
 			},
 			message: ({ value }) => `${value} is not a valid password`
 		}
