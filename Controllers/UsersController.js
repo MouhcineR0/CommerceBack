@@ -1,4 +1,7 @@
 const express = require("express");
+const { ComparePassword, CryptPassword } = require("../utils/bcrypt");
+
+// User Schema
 const User = require("../database/Schemas/UserSchema");
 
 const Signup = async (req, res) => {
@@ -7,11 +10,12 @@ const Signup = async (req, res) => {
 	} = req.body;
 	try {
 		if (firstname && lastname && email && password && tel && country) {
+			const CryptedPassword = CryptPassword(password);
 			const query = new User({
 				firstname,
 				lastname,
 				email,
-				password,
+				password: CryptedPassword,
 				tel,
 				country
 			})
@@ -23,6 +27,18 @@ const Signup = async (req, res) => {
 	catch (err) {
 		console.log(err);
 		return res.json({ msg: "Something Went Wrong !" }).status(500);
+	}
+}
+
+const Login = async (req, res) => {
+	const {
+		email, password
+	} = req.body;
+	if (email, password) {
+		const UserExists = await User.findOne({ email });
+		if (UserExists) {
+			if (ComparePassword(password, UserExists.password));
+		}
 	}
 }
 

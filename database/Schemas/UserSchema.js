@@ -40,12 +40,12 @@ const UserSchema = new mongoose.Schema({
 	password: {
 		type: String,
 		required: true,
-		validate: {
-			validator: (val) => {
-				return /^[a-zA-Zrachid !@#$%^&*0-9]{8,}$/.test(val);
-			},
-			message: ({ value }) => `${value} is not a valid password`
-		}
+		// validate: {
+		// 	validator: (val) => {
+		// 		return /^[a-zA-Zrachid !@#$%^&*0-9]{8,}$/.test(val);
+		// 	},
+		// 	message: ({ value }) => `${value} is not a valid password`
+		// }
 	},
 	tel: {
 		type: String,
