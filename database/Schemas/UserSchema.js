@@ -22,6 +22,10 @@ const UserSchema = new mongoose.Schema({
 		index : true,
 		immutable : true
 	},
+	password : {
+		type : String,
+		required : true
+	},
 	tel : {
 		type : String,
 		required : true,
@@ -29,8 +33,25 @@ const UserSchema = new mongoose.Schema({
 		trim : true,
 		validate : {
 			validator : function (val) {
-				return 
-			}
+				return /^\d+$/.test(val);
+			},
+			message : props => `${props.value} is not valid phone number` // https://stackoverflow.com/questions/63098294/validation-in-mongoose-schema
 		}
+	},
+	role : { // available roles : client, admin
+		type : String,
+		default : "client",
+		enum : ["client", "admin"]
+
+	},
+	country : {
+		type : mongoose.Schema.Types.ObjectId,
+		ref : "Countries"
+	},
+	created_at : {
+		type : Date,
+		default : Date.now()
 	}
 })
+
+module.exports = mongoose.model("User",UserSchema);

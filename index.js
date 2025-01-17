@@ -3,6 +3,8 @@ const helmet = require("helmet");
 const cors = require("cors");
 const app = express();
 
+const ConnectionDB = require("./database/Connection");
+
 app.use(helmet());
 app.use(cors({
 	// instead of setting backend url we just working now with every dns 
@@ -11,6 +13,8 @@ app.use(cors({
 }));
 
 require("dotenv").config();
+
+ConnectionDB();
 
 // here i should set our routes
 const UsersRoutes = require("./Routes/UsersRoutes");
