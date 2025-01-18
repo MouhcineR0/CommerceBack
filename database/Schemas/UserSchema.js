@@ -75,7 +75,8 @@ const UserSchema = new mongoose.Schema({
 		required: true,
 		validate: {
 			validator: (val) => {
-				return country.find((ele) => ele.name == val)
+				const find = country.find((ele) => ele.name == val);
+				return find ? true : false;
 			},
 			message: ({ value }) => `${value} is not a valid country`
 		}

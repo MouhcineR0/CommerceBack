@@ -6,6 +6,6 @@ COPY . .
 
 RUN npm i
 
-EXPOSE 3000
+EXPOSE 3060
 
 CMD [ "nodemon","index.js" ]

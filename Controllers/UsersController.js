@@ -35,18 +35,18 @@ const Login = async (req, res) => {
 		email, password
 	} = req.body;
 	try {
-		if (email, password) {
+		if (email && password) {
 			const UserExists = await User.findOne({ email });
 			if (UserExists) {
 				if (ComparePassword(password, UserExists.password)) {
 					return res.json({
 						user: {
-							_id,
+							_id: UserExists._id,
 							firstname: UserExists.firstname,
 							lastname: UserExists.lastname,
 							email: UserExists.email,
 							country: UserExists.country,
-							tel: UserExists.tel.slice(UserExists.tel.length - 2, UserExists.tel.length),
+							LastTwoNumbers: UserExists.tel.slice(UserExists.tel.length - 2, UserExists.tel.length),
 							RefreshToken: "RefreshToken",
 							AccessToken: "Bearer AccessToken", // let jwt until finish all necessarily things
 							QueryDone: true
@@ -64,7 +64,8 @@ const Login = async (req, res) => {
 			}).status(400);
 		}
 	}
-	catch {
+	catch (err) {
+		console.log(err);
 		return res.json({ msg: "Sonething went wrong !", QueryDone: false });
 	}
 }

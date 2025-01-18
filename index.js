@@ -30,7 +30,7 @@ const UsersRoutes = require("./Routes/UsersRoutes");
 app.use("/api", UsersRoutes);
 
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3065;
 
 app.listen(PORT, () => {
 	console.log(`running on port ${PORT}`);
