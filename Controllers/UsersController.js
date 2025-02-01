@@ -70,6 +70,37 @@ const Login = async (req, res) => {
 	}
 }
 
+const EditUserGenetalInfos = async (req, res) => {
+	const {
+		firstname, lastname, tel, country
+	} = req.body;
+	const { id } = req.params;
+	console.log(typeof (id));
+	// admin or client middleware auth
+	if (id) {
+		try {
+			await User.findOneAndUpdate({ _id: id },
+				{
+					$set: {
+						firstname,
+						lastname,
+						country,
+						tel
+					}
+				},
+				{
+					runValidators: true // use Schema validation middleware 
+				}
+			)
+			return res.json({ msg: "User Edited !!", QueryDone: true });
+		}
+		catch {
+			return res.json({ msg: "Error Edtiting user", QueryDone: false });
+		}
+	}
+	return res.json({ msg: "Error Edtiting user", QueryDone: false }).status(400);
+}
+
 const DelUser = async (req, res) => {
 	const { _id } = req.body;
 	const token = req.headers.authorization.split(' ')[1];
@@ -84,27 +115,6 @@ const DelUser = async (req, res) => {
 	}
 	catch {
 		return res.json({ msg: "Something Went Wrong !", QueryDone: false }).status(400);
-	}
-}
-
-const EditUserGenetalInfos = async (req, res) => {
-	const {
-		firstname, lastname, tel, country
-	} = req.body;
-	const { id } = req.params;
-	// admin or client middleware auth
-	try {
-		await User.findOneAndUpdate({ _id },
-			{
-				firstname,
-				lastname,
-				country,
-				tel
-			})
-		return res.json({ msg: "User Deleted !!", QueryDone: true });
-	}
-	catch {
-		return res.json({ msg: "Error Edtiting user", QueryDone: true });
 	}
 }
 
