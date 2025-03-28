@@ -4,10 +4,12 @@ const {
 	Signup,
 	DelUser,
 	EditUserGenetalInfos,
-	Login
+	Login,
+	GetUsers
 } = require("../Controllers/UsersController");
 
 
+Router.get("/users", GetUsers);
 Router.post("/client/signup", Signup);
 Router.post("/client/login", Login);
 Router.delete("/client/deluser", DelUser);

@@ -11,21 +11,20 @@ app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
 app.use(cors({
 	// instead of setting backend url we just working now with every dns 
-	origin: '*',
+	origin: process.env.NODE_ENV == 'development' ? '*' : false,
 	credentials: true
 }));
 
 require("dotenv").config();
-// const country = require("./json/country.json");
 
-// const ma = country.find((ele,ind) => 
-// {
-// 	return ele.name == "Morocco";
-// })
 ConnectionDB();
 // console.log(ma);
 
 // here i should set our routes
+app.get("/", (req, res) => {
+	res.send("index");
+})
+
 const UsersRoutes = require("./Routes/UsersRoutes");
 app.use("/api", UsersRoutes);
 

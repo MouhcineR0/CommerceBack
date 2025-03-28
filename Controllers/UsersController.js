@@ -118,4 +118,14 @@ const DelUser = async (req, res) => {
 	}
 }
 
-module.exports = { Signup, Login, DelUser, EditUserGenetalInfos };
+const GetUsers = async (req, res) => {
+	try {
+		const Users = await User.find({});
+		return res.json(Users);
+	}
+	catch {
+		return res.json({ msg: "Something Went Wrong !", QueryDone: false }).status(400);
+	}
+}
+
+module.exports = { Signup, Login, DelUser, EditUserGenetalInfos, GetUsers };
