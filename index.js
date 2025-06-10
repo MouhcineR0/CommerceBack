@@ -18,9 +18,7 @@ app.use(cors({
 require("dotenv").config();
 
 ConnectionDB();
-// console.log(ma);
 
-// here i should set our routes
 app.get("/", (req, res) => {
 	res.send("index");
 })

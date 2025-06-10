@@ -49,8 +49,8 @@ const Login = async (req, res) => {
 							LastTwoNumbers: UserExists.tel.slice(UserExists.tel.length - 2, UserExists.tel.length),
 							RefreshToken: "RefreshToken",
 							AccessToken: "Bearer AccessToken", // let jwt until finish all necessarily things
-							QueryDone: true
 						},
+						QueryDone: true
 					});
 				}
 				return res.json({
@@ -68,6 +68,7 @@ const Login = async (req, res) => {
 		console.log(err);
 		return res.json({ msg: "Sonething went wrong !", QueryDone: false });
 	}
+	return res.json({ msg: "Sonething went wrong !", QueryDone: false });
 }
 
 const EditUserGenetalInfos = async (req, res) => {
