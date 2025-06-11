@@ -16,5 +16,5 @@ push :
 dburl:
 	@echo "$(YELLOW)>> Enter DB URL (mongodb): $(NC)"; \
 	read dburl; \
-	echo "DB_URL = $$dburl" >> .test; \
-	echo "$(GREEN)>> Saved to .test successfully!$(NC)"
+	echo "DB_URL = $$dburl" >> .env; \
+	echo "$(GREEN)>> Saved to .env successfully!$(NC)"
