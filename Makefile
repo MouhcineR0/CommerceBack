@@ -1,3 +1,7 @@
+YELLOW = \033[1;33m
+GREEN = \033[1;32m
+NC = \033[0m
+
 NPM = npm
 
 DEFAULT = index.js
@@ -9,10 +13,8 @@ push :
 	@git commit -m "$(MSG)"
 	@git push
 
-dburl :
-	@read -p "Do you want to set DB URL? (y/n): " answer; \
-	if [ "$$answer" = "y" ]; then \
-		echo "You chose yes"; \
-	else \
-		echo "You chose no or something else"; \
-	fi
+dburl:
+	@echo "$(YELLOW)>> Enter DB URL (mongodb): $(NC)"; \
+	read dburl; \
+	echo "DB_URL = $$dburl" >> .test; \
+	echo "$(GREEN)>> Saved to .test successfully!$(NC)"
