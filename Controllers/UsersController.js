@@ -3,6 +3,7 @@ const { ComparePassword, CryptPassword } = require("../utils/bcrypt");
 
 // User Schema
 const User = require("../database/Schemas/UserSchema");
+const { CreateToken } = require("../utils/jwt");
 
 const Signup = async (req, res) => {
 	const {
@@ -39,6 +40,15 @@ const Login = async (req, res) => {
 			const UserExists = await User.findOne({ email });
 			if (UserExists) {
 				if (ComparePassword(password, UserExists.password)) {
+					ACCESS = "Bearer " + CreateToken("AccessToken", { UserExists });
+					REFRESH = CreateToken("RefreshToken", { UserExists });
+					res.cookie('refreshtoken', REFRESH, {
+						httpOnly: true,
+						secure: process.env.NODE_ENV == 'development' ? false : true,
+						// sameSite: 'Strict',
+						// path: '/api/refresh',
+						maxAge: 14 * 24 * 60 * 60 * 1000,
+					})
 					return res.json({
 						user: {
 							_id: UserExists._id,
@@ -47,8 +57,8 @@ const Login = async (req, res) => {
 							email: UserExists.email,
 							country: UserExists.country,
 							LastTwoNumbers: UserExists.tel.slice(UserExists.tel.length - 2, UserExists.tel.length),
-							RefreshToken: "RefreshToken",
-							AccessToken: "Bearer AccessToken", // let jwt until finish all necessarily things
+							RefreshToken: ACCESS, // warning here should switch
+							AccessToken: REFRESH, // let jwt until finish all necessarily things
 						},
 						QueryDone: true
 					});
@@ -69,6 +79,12 @@ const Login = async (req, res) => {
 		return res.json({ msg: "Sonething went wrong !", QueryDone: false });
 	}
 	return res.json({ msg: "Sonething went wrong !", QueryDone: false });
+}
+
+const Logout = (req, res) => {
+	res.clearCookie('refreshtoken');
+	// 204 means return success but there is no content to return
+	return res.status(200).json({ QueryDone: true });
 }
 
 const EditUserGenetalInfos = async (req, res) => {
@@ -129,4 +145,4 @@ const GetUsers = async (req, res) => {
 	}
 }
 
-module.exports = { Signup, Login, DelUser, EditUserGenetalInfos, GetUsers };
+module.exports = { Signup, Login, Logout, DelUser, EditUserGenetalInfos, GetUsers };

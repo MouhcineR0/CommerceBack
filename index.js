@@ -3,9 +3,13 @@ const helmet = require("helmet");
 const cors = require("cors");
 const app = express();
 const BodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 const ConnectionDB = require("./database/Connection");
 
+require("dotenv").config();
+
+app.use(cookieParser());
 app.use(helmet());
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
@@ -15,7 +19,6 @@ app.use(cors({
 	credentials: true
 }));
 
-require("dotenv").config();
 
 ConnectionDB();
 
@@ -24,6 +27,7 @@ app.get("/", (req, res) => {
 })
 
 const UsersRoutes = require("./Routes/UsersRoutes");
+
 app.use("/api", UsersRoutes);
 
 

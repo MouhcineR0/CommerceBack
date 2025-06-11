@@ -5,14 +5,22 @@ const {
 	DelUser,
 	EditUserGenetalInfos,
 	Login,
-	GetUsers
+	GetUsers,
+	Logout
 } = require("../Controllers/UsersController");
+const { AuthMiddleware } = require("../Middlewares/Auth");
+const { RefreshToken } = require("./Token");
 
 
-Router.get("/users", GetUsers);
+Router.get("/users", AuthMiddleware, GetUsers);
 Router.post("/client/signup", Signup);
 Router.post("/client/login", Login);
-Router.delete("/client/deluser", DelUser);
-Router.patch("/client/edit-general-infos/:id", EditUserGenetalInfos);
+Router.post("/client/logout", AuthMiddleware, Logout);
+Router.delete("/client/deluser", AuthMiddleware, DelUser);
+Router.patch("/client/edit-general-infos/:id", AuthMiddleware, EditUserGenetalInfos);
+
+// token refresh
+Router.post("/refresh", RefreshToken);
+
 
 module.exports = Router;
